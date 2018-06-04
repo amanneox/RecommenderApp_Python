@@ -14,15 +14,15 @@ class User(Document):
 
 
 class Comment(EmbeddedDocument):
-    content = StringField()
-    name = StringField(max_length=120)
+    content = ListField(StringField())
+    name = ListField(StringField(max_length=120))
 
 class Post(Document):
-    title = StringField(max_length=120, required=True)
-    author = ReferenceField(User, reverse_delete_rule=CASCADE)
+    title = ListField(StringField(max_length=120, required=True))
+    author = ListField(ReferenceField(User, reverse_delete_rule=CASCADE))
     tags = ListField(StringField(max_length=30))
     comments = ListField(EmbeddedDocumentField(Comment))
-    rating=FloatField()
+    rating=ListField(FloatField())
     meta = {'allow_inheritance': True}
 
 class TextPost(Post):
