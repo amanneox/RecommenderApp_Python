@@ -59,9 +59,11 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RecommenderPython/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="98" column="23" lean-forward="false" selection-start-line="98" selection-start-column="17" selection-end-line="98" selection-end-column="23" />
-              <folding />
+            <state relative-caret-position="330">
+              <caret line="15" column="1" lean-forward="false" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+              <folding>
+                <element signature="e#318#327#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -657,7 +659,7 @@
         <state relative-caret-position="286">
           <caret line="14" column="56" lean-forward="false" selection-start-line="14" selection-start-column="56" selection-end-line="14" selection-end-column="56" />
           <folding>
-            <element signature="e#318#327#0" expanded="false" />
+            <element signature="e#318#327#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -793,9 +795,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RecommenderPython/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="98" column="23" lean-forward="false" selection-start-line="98" selection-start-column="17" selection-end-line="98" selection-end-column="23" />
-          <folding />
+        <state relative-caret-position="330">
+          <caret line="15" column="1" lean-forward="false" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+          <folding>
+            <element signature="e#318#327#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
