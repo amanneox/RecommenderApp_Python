@@ -26,7 +26,7 @@ SECRET_KEY = 'h6q-!o1%!kgin^3ppd@r*+_6xct0_+su+dkj+fe$bir22!pmgx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -103,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+ALLOWED_HOSTS = ['recommenderpython-dev.ap-south-1.elasticbeanstalk.com']
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
