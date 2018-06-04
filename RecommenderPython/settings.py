@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from mongoengine import *
-connect('project',alias='default',host='localhost:27017')
+connect('mongodb+srv://amanneox:amanneox@cluster0-q36l8.mongodb.net/test?retryWrites=true')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
