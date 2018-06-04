@@ -17,6 +17,7 @@ class Comment(EmbeddedDocument):
     content = ListField(StringField())
     name = ListField(StringField(max_length=120))
 
+
 class Post(Document):
     title = ListField(StringField(max_length=120, required=True))
     author = ListField(ReferenceField(User, reverse_delete_rule=CASCADE))
