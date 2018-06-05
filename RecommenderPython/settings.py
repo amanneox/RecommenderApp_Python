@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from mongoengine import *
-connect(host='mongodb+srv://amanneox:amanneox@cluster0-q36l8.mongodb.net/test?retryWrites=true'
-)
-#connect('mongodb+srv://amanneox:amanneox@cluster0-q36l8.mongodb.net/test?retryWrites=true')
+import pymongo
+from pymongo import uri_parser
+
+connect(host='mongodb+srv://amanneox:amanneox@cluster0-q36l8.mongodb.net/test?retryWrites=true')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-ALLOWED_HOSTS = ['recommenderpython-dev.ap-south-1.elasticbeanstalk.com','127.0.0.1']
+ALLOWED_HOSTS = ['recommenderpython-dev.ap-south-1.elasticbeanstalk.com','127.0.0.1','localhost']
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
