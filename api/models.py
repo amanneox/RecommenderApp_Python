@@ -4,6 +4,14 @@ from django.db import models
 from mongoengine import *
 
 
+
+class Service(Document):
+    name=ListField(StringField(max_length=20,required=True))
+    category=ListField(StringField(required=True))
+    subcategory=ListField(StringField(required=True))
+    status=ListField(BooleanField(required=True))
+
+
 class User(Document):
     email = ListField(StringField(required=True))
     first_name = ListField(StringField(max_length=50))
@@ -24,6 +32,7 @@ class Post(Document):
     tags = ListField(StringField(max_length=30))
     comments = ListField(EmbeddedDocumentField(Comment))
     rating=ListField(FloatField())
+    sid=ListField(ReferenceField(Service,required=True))
     meta = {'allow_inheritance': True}
 
 class TextPost(Post):
@@ -34,4 +43,3 @@ class ImagePost(Post):
 
 class LinkPost(Post):
     link_url = StringField()
-
