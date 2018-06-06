@@ -11,23 +11,11 @@ class Service(Document):
     status=ListField(BooleanField(required=True))
 
 
-class LatLng(EmbeddedDocument):
-    lat=StringField()
-    lng=StringField()
-
-class Address(EmbeddedDocument):
-    street=StringField()
-    pincode=StringField()
-    city=StringField()
-    state=StringField()
-    country=StringField()
-
-
 class Item(Document):
     name=ListField(StringField(required=True))
     category=ListField(ReferenceField(Service))
-    location=ListField(EmbeddedDocumentField(LatLng))
-    address=ListField(EmbeddedDocumentField(Address))
+    location=ListField(DictField())
+    address=ListField(DictField())
 
 
 
