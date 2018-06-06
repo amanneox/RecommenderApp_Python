@@ -8,7 +8,10 @@ urlpatterns = [
     url(r'^users/$', views.user_list),
     url(r'^users/(?P<pk>[0-9a-f]+)$', views.user_detail),
     url(r'^services/$', views.service_list),
-    url(r'^services/(?P<pk>[0-9a-f]+)$', views.service_detail),
+    url(r'^services/(?P<pk>[0-9a-f]+)$', views.item_list),
+    url(r'^items/$', views.service_list),
+    url(r'^items/(?P<pk>[0-9a-f]+)$', views.item_detail),
+
 
 ]
 

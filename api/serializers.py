@@ -1,6 +1,29 @@
 from rest_framework_mongoengine import serializers
 from api.models import *
 
+class ItemSerializer(serializers.DocumentSerializer):
+    class Meta:
+        model=Item
+        fields='__all__'
+
+
+    def create(self, validated_data):
+        return Item.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.category = validated_data.get('category', instance.category)
+        instance.location=validated_data.get('location',instance.location)
+        instance.address=validated_data.get('address',instance.address)
+
+        instance.save()
+        return instance
+
+    def __delete__(self, instance):
+        return Item.objects.delete()
+
+
+
 class ServiceSerializer(serializers.DocumentSerializer):
     class Meta:
         model=Service
