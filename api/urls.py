@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^users/(?P<pk>[0-9a-f]+)$', views.user_detail),
     url(r'^services/$', views.service_list),
     url(r'^services/(?P<pk>[0-9a-f]+)$', views.service_detail),
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

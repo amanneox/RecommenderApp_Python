@@ -26,8 +26,9 @@ class Address(EmbeddedDocument):
 class Item(Document):
     name=ListField(StringField(required=True))
     category=ListField(ReferenceField(Service))
-    location=ListField(EmbeddedDocumentListField(LatLng))
-    address=ListField(EmbeddedDocumentListField(Address))
+    location=ListField(EmbeddedDocumentField(LatLng))
+    address=ListField(EmbeddedDocumentField(Address))
+
 
 
 class User(Document):
@@ -39,16 +40,12 @@ class User(Document):
     meta = {"db_alias": "default", 'collection': 'user'}
 
 
-class Comment(EmbeddedDocument):
-    content = ListField(StringField())
-    name = ListField(StringField(max_length=120))
-
 
 class Post(Document):
     title = ListField(StringField(max_length=120, required=True))
     author = ListField(ReferenceField(User, reverse_delete_rule=CASCADE))
     tags = ListField(StringField(max_length=30))
-    comments = ListField(EmbeddedDocumentListField(Comment))
+    comments = ListField(StringField())
     rating=ListField(FloatField())
     sid=ListField(ReferenceField(Service,required=True))
     meta = {'allow_inheritance': True}
