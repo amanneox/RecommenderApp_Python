@@ -15,14 +15,16 @@ from mongoengine import *
 import pymongo
 from pymongo import uri_parser
 #Production
-#connect(host='mongodb+srv://amanneox:amanneox@cluster0-q36l8.mongodb.net/test?retryWrites=true')
+connect(host='mongodb+srv://amanneox:amanneox@cluster0-q36l8.mongodb.net/test?retryWrites=true')
 #DEV
-connect('project')
+#connect('project')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 

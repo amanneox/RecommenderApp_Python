@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import include
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
+from api.views import index
 urlpatterns = [
-
-    #url(r'^$', index, name='index'),
+    url(r'^$', index, name='index'),
     path('admin/', admin.site.urls),
     url(r'^api/', include('api.urls')),
+
+
 ]
 urlpatterns += staticfiles_urlpatterns()

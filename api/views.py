@@ -180,3 +180,6 @@ def user_detail(request, pk):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+def index(request):
+    context={}
+    return render(request, 'index.html', context)
