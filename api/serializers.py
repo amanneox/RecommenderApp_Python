@@ -1,6 +1,14 @@
 from rest_framework_mongoengine import serializers
 from api.models import *
 
+class LocationSerializer():
+
+    def parse(self,validated_data):
+        item=Item.objects()
+        x=[x.location for x in item if x.name==['Pizza Hut']]
+        return True
+
+
 class ItemSerializer(serializers.DocumentSerializer):
     class Meta:
         model=Item

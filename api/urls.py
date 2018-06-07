@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^items/$', views.item_list),
     url(r'^items/(?P<pk>[0-9a-f]+)$', views.item_detail),
 
-
+    url(r'^items/loc/$', views.location_item_list),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -4,7 +4,20 @@ from rest_framework import *
 from rest_framework import status
 from rest_framework.response import *
 from rest_framework.decorators import *
+
 # Create your views here.
+@api_view(['GET','POST'])
+def location_item_list(request):
+    """
+    Location based items
+    """
+    if request.method=='POST':
+        instance=LocationSerializer()
+        loc=request.data
+        loc=([float(x) for x in loc.values()])
+        res=LocationSerializer.parse(instance,validated_data=loc)
+        return Response(res)
+
 @api_view(['GET', 'POST'])
 def item_list(request):
     """
