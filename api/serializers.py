@@ -15,7 +15,7 @@ class ItemSerializer(serializers.DocumentSerializer):
         instance.category = validated_data.get('category', instance.category)
         instance.location=validated_data.get('location',instance.location)
         instance.address=validated_data.get('address',instance.address)
-
+        instance.img_url=validated_data.get('img_url',instance.img_url)
         instance.save()
         return instance
 

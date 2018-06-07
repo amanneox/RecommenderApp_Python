@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 from mongoengine import *
 
-
 class Service(Document):
     name=ListField(StringField(max_length=20,required=True))
     category=ListField(StringField(required=True))
@@ -11,9 +10,12 @@ class Service(Document):
     status=ListField(BooleanField(required=True))
 
 
+
+
 class Item(Document):
     name=ListField(StringField(required=True))
     category=ListField(ReferenceField(Service))
+    img_url=ListField(StringField())
     location=ListField(DictField())
     address=ListField(DictField())
 
