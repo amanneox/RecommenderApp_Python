@@ -4,6 +4,18 @@ import json
 from api.geocoder import *
 
 
+class DataFilter(object):
+    def filter(self,validated_data):
+        print(validated_data)
+        service=Service.objects(category=['Food'])
+        cat_list=iter([x.id for x in service])
+        for i in cat_list:
+            item = Item.objects(category=[i])
+            print([(x.name, x.location) for x in item])
+
+        return True
+
+
 class LocationSerializer():
 
     def parse(self,validated_data):

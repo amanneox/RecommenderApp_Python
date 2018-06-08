@@ -14,9 +14,9 @@ def location_item_list(request):
     if request.method=='POST':
         instance=LocationSerializer()
         loc=request.data
-        loc=([float(x) for x in loc.values()])
+        loc=([x for x in loc.values()])
         res=LocationSerializer.parse(instance,validated_data=loc)
-        return Response(res)
+        return Response(DataFilter.filter(DataFilter(),validated_data=loc))
 
 @api_view(['GET', 'POST'])
 def item_list(request):
