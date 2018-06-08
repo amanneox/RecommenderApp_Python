@@ -1,12 +1,26 @@
 from rest_framework_mongoengine import serializers
 from api.models import *
+import json
+from api.geocoder import *
+
 
 class LocationSerializer():
 
     def parse(self,validated_data):
         item=Item.objects()
-        x=[x.location for x in item if x.name==['Pizza Hut']]
-        return True
+        l=list()
+        x=[(x.name, x.location, x.address) for x in item]
+        start = (validated_data[0], validated_data[1])
+        range=validated_data[2]
+        it=iter(x)
+        for i in it:
+            for j in i[1]:
+                end = (j['lat'],j['lng'])
+                if Distace.distance(Distace(),start,end,range):
+                    l.append(i)
+
+        return l
+
 
 
 class ItemSerializer(serializers.DocumentSerializer):
