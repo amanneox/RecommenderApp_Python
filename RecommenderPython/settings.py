@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
-    'geopy'
+    'geopy',
+    'rest_framework.authtoken',
 
 ]
 

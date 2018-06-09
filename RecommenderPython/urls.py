@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^api/', include('api.urls')),
 
 
+
 ]
 urlpatterns += staticfiles_urlpatterns()
