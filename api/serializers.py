@@ -6,25 +6,25 @@ from api.geocoder import *
 
 class DataFilter(object):
     def filter(self,validated_data):
-        print(validated_data)
-        service=Service.objects(category=['Food'])
+        l=list()
+        service=Service.objects(category=[validated_data[3]])
         cat_list=iter([x.id for x in service])
         for i in cat_list:
             item = Item.objects(category=[i])
-            print([(x.name, x.location) for x in item])
-
-        return True
+            valid_data =[(x.name, x.location) for x in item]
+            x=LocationSerializer.parse(LocationSerializer(),validated_data,valid_data)
+            l.append(x)
+        return l
 
 
 class LocationSerializer():
 
-    def parse(self,validated_data):
-        item=Item.objects()
+    def parse(self,validated_data,data):
+        item=data
         l=list()
-        x=[(x.name, x.location, x.address) for x in item]
         start = (validated_data[0], validated_data[1])
         range=validated_data[2]
-        it=iter(x)
+        it=iter(item)
         for i in it:
             for j in i[1]:
                 end = (j['lat'],j['lng'])

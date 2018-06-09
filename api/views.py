@@ -15,7 +15,7 @@ def location_item_list(request):
         instance=LocationSerializer()
         loc=request.data
         loc=([x for x in loc.values()])
-        res=LocationSerializer.parse(instance,validated_data=loc)
+       # res=LocationSerializer.parse(instance,validated_data=loc)
         return Response(DataFilter.filter(DataFilter(),validated_data=loc))
 
 @api_view(['GET', 'POST'])
