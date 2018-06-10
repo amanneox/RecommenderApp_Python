@@ -1,13 +1,20 @@
 from django.shortcuts import render
 from api.serializers import *
-from rest_framework import *
 from rest_framework import status
-from rest_framework.response import *
 from rest_framework.decorators import *
-from django.conf import settings
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework import permissions
+from rest_framework.permissions import *
+from rest_framework.authentication import *
+class CustomerAccessPermission(permissions.BasePermission):
+    message = 'Auth Token required.'
+
+    def has_permission(self, request, view):
+        return True
+
+
 
 class CustomAuthToken(ObtainAuthToken):
 
@@ -24,6 +31,7 @@ class CustomAuthToken(ObtainAuthToken):
         })
 # Create your views here.
 @api_view(['GET','POST'])
+
 def location_item_list(request):
     """
     Location based items
