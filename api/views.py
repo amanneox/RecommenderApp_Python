@@ -30,6 +30,7 @@ class CustomAuthToken(ObtainAuthToken):
             'email': user.email
         })
 # Create your views here.
+
 @api_view(['GET','POST'])
 
 def location_item_list(request):
@@ -42,6 +43,19 @@ def location_item_list(request):
         loc=([x for x in loc.values()])
        # res=LocationSerializer.parse(instance,validated_data=loc)
         return Response(DataFilter.filter(DataFilter(),validated_data=loc))
+
+@api_view(['GET', 'POST'])
+def comment_list(request):
+    """
+    List all comment, or create a new comment.
+    """
+    if request.method == 'POST':
+        validated_data=([x for x in request.data.values()])
+        serializer=CommentFilter.filter(CommentFilter(),validated_data=validated_data)
+        return Response(serializer)
+
+
+
 
 @api_view(['GET', 'POST'])
 def item_list(request):

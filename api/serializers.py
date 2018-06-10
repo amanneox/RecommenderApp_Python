@@ -2,7 +2,12 @@ from rest_framework_mongoengine import serializers
 from api.models import *
 import json
 from api.geocoder import *
+from api.models import Post
 
+class CommentFilter(object):
+    def filter(self,validated_data):
+        com_list=([x.comments for x in Post.objects])
+        return com_list
 
 class DataFilter(object):
     def filter(self,validated_data):
