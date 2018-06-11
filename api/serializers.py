@@ -6,7 +6,7 @@ from api.models import Post
 
 class CommentFilter(object):
     def filter(self,validated_data):
-        com_list=([x.comments for x in Post.objects])
+        com_list=([x.comments for x in Post.objects(sid=[validated_data[0]])])
         return com_list
 
 class DataFilter(object):
