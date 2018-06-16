@@ -18,6 +18,8 @@ class Item(Document):
     img_url=ListField(StringField())
     location=ListField(DictField())
     address=ListField(DictField())
+    value=ListField(StringField())
+    rating=ListField(FloatField())
 
 
 
