@@ -4,30 +4,30 @@ from django.db import models
 from mongoengine import *
 
 class Service(Document):
-    name=ListField(StringField(max_length=20,required=True))
-    category=ListField(StringField(required=True))
-    subcategory=ListField(StringField(required=True))
-    status=ListField(BooleanField(required=True))
+    name=StringField(max_length=20,required=True)
+    category=StringField(required=True)
+    subcategory=StringField(required=True)
+    status=BooleanField(required=True)
 
 
 
 
 class Item(Document):
-    name=ListField(StringField(required=True))
-    category=ListField(ReferenceField(Service))
-    img_url=ListField(StringField())
-    location=ListField(DictField())
-    address=ListField(DictField())
-    value=ListField(StringField())
-    rating=ListField(FloatField())
+    name=StringField(required=True)
+    category=ReferenceField(Service)
+    img_url=StringField()
+    location=DictField()
+    address=StringField()
+    value=StringField()
+    rating=FloatField()
 
 
 
 class User(Document):
-    email = ListField(StringField(required=True))
-    first_name = ListField(StringField(max_length=50))
-    last_name = ListField(StringField(max_length=50))
-    number=ListField(IntField())
+    email = StringField(required=True)
+    first_name = StringField(max_length=50)
+    last_name = StringField(max_length=50)
+    number=IntField()
     social=ListField(StringField())
     meta = {"db_alias": "default", 'collection': 'user'}
 
