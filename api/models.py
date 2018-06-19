@@ -34,12 +34,12 @@ class User(Document):
 
 
 class Post(Document):
-    title = ListField(StringField(max_length=120, required=True))
-    author = ListField(ReferenceField(User, reverse_delete_rule=CASCADE))
+    title = StringField(max_length=120, required=True)
+    author = ReferenceField(User, reverse_delete_rule=CASCADE)
     tags = ListField(StringField(max_length=30))
     comments = ListField(StringField())
     rating=ListField(FloatField())
-    sid=ListField(ReferenceField(Service,required=True))
+    sid=ReferenceField(Service,required=True)
     meta = {'allow_inheritance': True}
 
 class TextPost(Post):

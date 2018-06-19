@@ -3,16 +3,44 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - Admin</title>
+  {% load static %}
+
+  <script src="{%static "js/jquery.js" %}" charset="utf-8"></script>
+  <link rel="stylesheet" href="{%static "bulma/css/bulma.css" %}">
+  <link rel="stylesheet" href="{%static "css/login.css" %}">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<style media="screen">
+  body{
+    padding: 12px;
+    font-family: 'Lato', sans-serif;
+  }
+
+</style>
 
 </head>
 
 <body>
-<h1>API For Python</h1>
-<p>/api/users</p>
-<p>/api/items</p>
-<p>/api/posts</p>
-<p>/api/services</p>
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Documentation</a></li>
+      <li><a href="#">API</a></li>
+      <li class="is-active"><a href="#" aria-current="page">Version 1.0</a></li>
+    </ul>
+  </nav>
+<div class="container">
+<article class="message is-danger">
+  <div class="message-header">
+    <p>Under Development</p>
+    <button class="delete" aria-label="delete"></button>
+  </div>
+  <div class="message-body">
+    The Django Web Service is currently in production, Browse the API section to check out the endpoints.
+  </div>
+</article>
+</div>
 </body>
 
 </html>

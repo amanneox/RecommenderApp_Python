@@ -23,8 +23,5 @@ urlpatterns = [
     url(r'^$', index, name='index'),
     path('admin/', admin.site.urls),
     url(r'^api/', include('api.urls')),
-
-
-
 ]
 urlpatterns += staticfiles_urlpatterns()
