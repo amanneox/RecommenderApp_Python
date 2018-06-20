@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API - Admin</title>
+  {% load static %}
+
+  <script src="{%static "js/jquery.js" %}" charset="utf-8"></script>
+  <link rel="stylesheet" href="{%static "bulma/css/bulma.css" %}">
+  {% include "include/utils.html" %}
+<style media="screen">
+  body{
+    padding: 12px;
+  font-family: 'Lato', sans-serif;
+  }
+
+</style>
+
+</head>
+
+<body>
+  {% include "include/nav.html" %}
+<div class="container">
+  <h1 class="title"><span class="tag is-success is-large">Items</span></h1>
+  <h2 class="subtitle"><span class="tag is-success">GET</span>&nbsp;<span class="tag is-success">POST</span>&nbsp;<span class="tag is-warning">PATCH</span>&nbsp;<span class="tag is-success">DELETE</span></h2>
+  <article class="message is-dark">
+    <div class="message-body">
+      <p>/api/items &nbsp;<a href="/api/items" class="button is-link is-small">Check</a> </p>
+      <p>/api/items/id</p>
+    </div>
+  </article>
+  <h1 class="title"><span class="tag is-success is-large">Users</span></h1>
+  <h2 class="subtitle"><span class="tag is-success">GET</span>&nbsp;<span class="tag is-success">POST</span>&nbsp;<span class="tag is-success">PATCH</span>&nbsp;<span class="tag is-success">DELETE</span></h2>
+  <article class="message is-dark">
+    <div class="message-body">
+      <p>/api/users&nbsp;<a href="/api/users" class="button is-link is-small">Check</a></p>
+      <p>/api/users/id</p>
+    </div>
+  </article>
+  <h1 class="title"><span class="tag is-success is-large">Services</span></h1>
+  <h2 class="subtitle"><span class="tag is-success">GET</span>&nbsp;<span class="tag is-success">POST</span>&nbsp;<span class="tag is-success">PATCH</span>&nbsp;<span class="tag is-success">DELETE</span></h2>
+  <article class="message is-dark">
+    <div class="message-body">
+      <p>/api/services&nbsp;<a href="/api/services" class="button is-link is-small">Check</a></p>
+      <p>/api/services/id</p>
+    </div>
+  </article>
+  <h1 class="title"><span class="tag is-warning is-large">Posts</span></h1>
+  <h2 class="subtitle"><span class="tag is-success">GET</span>&nbsp;<span class="tag is-danger">POST</span>&nbsp;<span class="tag is-success">PATCH</span>&nbsp;<span class="tag is-success">DELETE</span></h2>
+  <article class="message is-dark">
+    <div class="message-body">
+      <p>/api/posts&nbsp;<a href="/api/posts" class="button is-link is-small">Check</a></p>
+      <p>/api/posts/id</p>
+    </div>
+  </article>
+</div>
+</body>
+
+</html>

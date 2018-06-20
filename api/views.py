@@ -236,3 +236,7 @@ def index(request):
     context={}
 
     return render(request, 'index.html', context)
+
+def apidoc(request):
+
+    return render(request, 'api.html')
