@@ -2,6 +2,10 @@ from django.db import models
 
 # Create your models here.
 from mongoengine import *
+class AdminUser(Document):
+    username=StringField()
+    email=StringField(required=True)
+    password=StringField(required=True)
 
 class Service(Document):
     name=StringField(max_length=20,required=True)

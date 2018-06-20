@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.http import QueryDict
+
 from api.serializers import *
 from rest_framework import status
 from rest_framework.decorators import *
@@ -6,8 +7,10 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import permissions
-from rest_framework.permissions import *
-from rest_framework.authentication import *
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+
+
 class CustomerAccessPermission(permissions.BasePermission):
     message = 'Auth Token required.'
 
@@ -15,9 +18,7 @@ class CustomerAccessPermission(permissions.BasePermission):
         return True
 
 
-
 class CustomAuthToken(ObtainAuthToken):
-
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
@@ -29,20 +30,22 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id': user.pk,
             'email': user.email
         })
+
+
 # Create your views here.
 
-@api_view(['GET','POST'])
-
+@api_view(['GET', 'POST'])
 def location_item_list(request):
     """
     Location based items
     """
-    if request.method=='POST':
-        instance=LocationSerializer()
-        loc=request.data
-        loc=([x for x in loc.values()])
-       # res=LocationSerializer.parse(instance,validated_data=loc)
-        return Response(DataFilter.filter(DataFilter(),validated_data=loc))
+    if request.method == 'POST':
+        instance = LocationSerializer()
+        loc = request.data
+        loc = ([x for x in loc.values()])
+        # res=LocationSerializer.parse(instance,validated_data=loc)
+        return Response(DataFilter.filter(DataFilter(), validated_data=loc))
+
 
 @api_view(['GET', 'POST'])
 def comment_list(request):
@@ -50,11 +53,26 @@ def comment_list(request):
     List all comment, or create a new comment.
     """
     if request.method == 'POST':
-        validated_data=([x for x in request.data.values()])
-        serializer=CommentFilter.filter(CommentFilter(),validated_data=validated_data)
+        validated_data = ([x for x in request.data.values()])
+        serializer = CommentFilter.filter(CommentFilter(), validated_data=validated_data)
         return Response(serializer)
 
+@api_view(['GET', 'POST'])
+def admin_list(request):
+    """
+    List all Post, or create a new Post.
+    """
+    if request.method == 'GET':
+        snippets = AdminUser.objects.all()
+        serializer = AdminUserSerializer(snippets, many=True)
+        return Response(serializer.data)
 
+    elif request.method == 'POST':
+        serializer = AdminUserSerializer(data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'POST'])
@@ -68,11 +86,12 @@ def item_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = ItemSerializer(data=request.data,partial=True)
+        serializer = ItemSerializer(data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def item_detail(request, pk):
@@ -100,8 +119,6 @@ def item_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
-
 @api_view(['GET', 'POST'])
 def service_list(request):
     """
@@ -113,11 +130,12 @@ def service_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = ServiceSerializer(data=request.data,partial=True)
+        serializer = ServiceSerializer(data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def service_detail(request, pk):
@@ -145,7 +163,6 @@ def service_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 @api_view(['GET', 'POST'])
 def post_list(request):
     """
@@ -157,11 +174,12 @@ def post_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = PostSerializer(data=request.data,partial=True)
+        serializer = PostSerializer(data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def post_detail(request, pk):
@@ -189,7 +207,6 @@ def post_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 @api_view(['GET', 'POST'])
 def user_list(request):
     """
@@ -201,11 +218,12 @@ def user_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = UserSerializer(data=request.data,partial=True)
+        serializer = UserSerializer(data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def user_detail(request, pk):
@@ -232,15 +250,36 @@ def user_detail(request, pk):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 def index(request):
-    context={}
+    context = {}
 
     return render(request, 'index.html', context)
 
-def apidoc(request):
 
+def apidoc(request):
     return render(request, 'api.html')
 
-def login(request):
 
+def login(request):
     return render(request, 'login.html')
+
+
+def user_auth(request):
+    if request.method == 'POST':
+        req = request.POST
+        mydict = QueryDict.dict(req)
+        print(mydict)
+        access=AdminLogin.admin_auth(AdminLogin(),mydict)
+        if access:
+            context={
+            'token':mydict.get('csrfmiddlewaretoken'),
+            'username':mydict.get('email'),
+            'email':mydict.get('email')
+            }
+            response= render(request, 'login-test.html')
+            response.set_cookie('auth_cookie',value=context,path='/')
+            return response
+        else:
+            raise AssertionError('invalid login')
+

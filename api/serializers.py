@@ -4,10 +4,22 @@ import json
 from api.geocoder import *
 from api.models import Post
 
+
+class AdminLogin(object):
+    def admin_auth(self,validated_data):
+        x = AdminUser.objects(__raw__={'email': validated_data.get('email'),'password':validated_data.get('password')})
+
+        if not x:
+            return False
+        else:
+            return True
+
+
 class CommentFilter(object):
     def filter(self,validated_data):
         com_list=([x.comments for x in Post.objects(sid=[validated_data[0]])])
         return com_list
+
 
 class DataFilter(object):
     def filter(self,validated_data):
@@ -39,6 +51,24 @@ class LocationSerializer():
         return l
 
 
+class AdminUserSerializer(serializers.DocumentSerializer):
+    class Meta:
+        model=AdminUser
+        fields='__all__'
+
+
+    def create(self, validated_data):
+        return AdminUser.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data.get('email', instance.email)
+        instance.password = validated_data.get('password', instance.password)
+        instance.usernmae=validated_data.get('username',instance.username)
+        instance.save()
+        return instance
+
+    def __delete__(self, instance):
+        return AdminUser.objects.delete()
 
 class ItemSerializer(serializers.DocumentSerializer):
     class Meta:

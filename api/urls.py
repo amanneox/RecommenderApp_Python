@@ -4,6 +4,7 @@ from api import views
 from api.views import apidoc
 from api.views import CustomAuthToken
 urlpatterns = [
+    url(r'^adminuser/$', views.admin_list),
     url(r'^posts/$', views.post_list),
     url(r'^posts/(?P<pk>[0-9a-f]+)$', views.post_detail),
     url(r'^users/$', views.user_list),
