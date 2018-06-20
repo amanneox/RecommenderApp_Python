@@ -240,3 +240,7 @@ def index(request):
 def apidoc(request):
 
     return render(request, 'api.html')
+
+def login(request):
+
+    return render(request, 'login.html')

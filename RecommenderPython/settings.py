@@ -15,9 +15,9 @@ from mongoengine import *
 import pymongo
 from pymongo import uri_parser
 #Production
-connect(host='mongodb+srv://amanneox:amanneox@cluster0-q36l8.mongodb.net/test?retryWrites=true')
+#connect(host='mongodb+srv://amanneox:amanneox@cluster0-q36l8.mongodb.net/test?retryWrites=true')
 #DEV
-#db=connect('project')
+db=connect('project')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
