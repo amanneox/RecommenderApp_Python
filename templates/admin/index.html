@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+
+    <script src="{%static "js/jquery.js" %}" charset="utf-8"></script>
+    <link rel="stylesheet" href="{%static "bulma/css/bulma.css" %}">
+
+    {% include "include/utils.html" %}
+  <style media="screen">
+    body{
+      padding: 12px;
+      font-family: 'Lato', sans-serif;
+    }
+
+  </style>
 </head>
 <body>
-Welcome {{ email }}
+  <p>Welcome {{ email }}</p>
+<a href="/logout" class="button is-danger">Logout</a>
 </body>
 </html>
