@@ -27,11 +27,12 @@
               <div class="column is-4 is-offset-4">
                   <h3 class="title has-text-grey">Login</h3>
                   <p class="subtitle has-text-grey">Please login to proceed.</p>
+                  <p class="subtitle has-text-danger">{{ error }}</p>
                   <div class="box">
                       <figure class="avatar">
                           <img width="120" height="120" src="{%static "img/astronaut.svg" %}">
                       </figure>
-                      <form action="/user_auth/" method="post">
+                      <form action="/login/" method="post">
                         {% csrf_token %}
                         {{ form }}
                           <div class="field">

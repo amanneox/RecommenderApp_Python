@@ -250,6 +250,13 @@ def user_detail(request, pk):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+def admin(request):
+    context={}
+    auth_cookie=request.COOKIES.get('auth_cookie', None)
+    if not auth_cookie:
+        return render(request, 'login.html', context)
+    else:
+        return render(request,'admin/index.html',context)
 
 def index(request):
     context = {}
@@ -262,14 +269,11 @@ def apidoc(request):
 
 
 def login(request):
-    return render(request, 'login.html')
-
-
-def user_auth(request):
+    if request.method=='GET':
+        return render(request, 'login.html')
     if request.method == 'POST':
         req = request.POST
         mydict = QueryDict.dict(req)
-        print(mydict)
         access=AdminLogin.admin_auth(AdminLogin(),mydict)
         if access:
             context={
@@ -277,9 +281,11 @@ def user_auth(request):
             'username':mydict.get('email'),
             'email':mydict.get('email')
             }
-            response= render(request, 'login-test.html')
+            response= render(request, 'admin/index.html',context)
             response.set_cookie('auth_cookie',value=context,path='/')
             return response
         else:
-            raise AssertionError('invalid login')
-
+            context={
+                "error":"Login Failed, Try Again"
+            }
+            return render(request,'login.html',context)
