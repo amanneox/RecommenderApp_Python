@@ -272,9 +272,9 @@ def signup(request):
     if request.method=='GET':
         return render(request,'signup.html')
     if request.method=='POST':
-        print(request.POST)
         res=admin_list(request)
-        if not res:
+
+        if res.status_code==400:
             context={"error":"Unable to sign up"}
             return render(request, 'signup.html',context)
         context={"msg":"Successfully signed up"}
@@ -301,3 +301,9 @@ def login(request):
                 "error":"Login Failed, Try Again"
             }
             return render(request,'login.html',context)
+
+def logout(request):
+    if request.method == 'GET':
+        response = render(request, 'login.html')
+        response.delete_cookie('auth_cookie')
+        return response
