@@ -256,6 +256,11 @@ def admin(request):
     if not auth_cookie:
         return render(request, 'login.html', context)
     else:
+        snippets = Item.objects.all()
+        items = ItemSerializer(snippets, many=True)
+        context={
+            "items":items.data
+        }
         return render(request,'admin/index.html',context)
 
 def index(request):
@@ -293,7 +298,7 @@ def login(request):
             'username':mydict.get('email'),
             'email':mydict.get('email')
             }
-            response= render(request, 'admin/index.html',context)
+            response= HttpResponseRedirect("/admin")
             response.set_cookie('auth_cookie',value=context,path='/')
             return response
         else:

@@ -18,7 +18,27 @@
   </style>
 </head>
 <body>
-  <p>Welcome {{ email }}</p>
-<a href="/logout" class="button is-danger">Logout</a>
+  <div class="container">
+    <div class="columns">
+      <div class="column is-one-fifth">
+        <a href="{% url 'logout' %}" class="button is-danger">Logout</a>
+      </div>
+    </div>
+    <div class="columns">
+  <div class="column">
+  {{items}}
+  </div>
+  <div class="column">
+    Second column
+  </div>
+  <div class="column">
+    Third column
+  </div>
+  <div class="column">
+    Fourth column
+  </div>
+</div>
+  </div>
+
 </body>
 </html>
