@@ -268,6 +268,18 @@ def apidoc(request):
     return render(request, 'api.html')
 
 
+def signup(request):
+    if request.method=='GET':
+        return render(request,'signup.html')
+    if request.method=='POST':
+        print(request.POST)
+        res=admin_list(request)
+        if not res:
+            context={"error":"Unable to sign up"}
+            return render(request, 'signup.html',context)
+        context={"msg":"Successfully signed up"}
+        return render(request,'login.html',context)
+
 def login(request):
     if request.method=='GET':
         return render(request, 'login.html')
