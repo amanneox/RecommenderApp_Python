@@ -24,10 +24,10 @@ class CommentFilter(object):
 class DataFilter(object):
     def filter(self,validated_data):
         l=list()
-        service=Service.objects(category=[validated_data[3]])
+        service=Service.objects(__raw__={'category':validated_data.get('category')})
         cat_list=iter([x.id for x in service])
         for i in cat_list:
-            item = Item.objects(category=[i])
+            item = Item.objects(__raw__={'category':i})
             valid_data =[(x.name, x.location) for x in item]
             x=LocationSerializer.parse(LocationSerializer(),validated_data,valid_data)
             l.append(x)
@@ -37,16 +37,15 @@ class DataFilter(object):
 class LocationSerializer():
 
     def parse(self,validated_data,data):
-        item=data
         l=list()
-        start = (validated_data[0], validated_data[1])
-        range=validated_data[2]
-        it=iter(item)
+        start = (validated_data.get('lat'), validated_data.get('lng'))
+        range=validated_data.get('range')
+        it=iter(data)
         for i in it:
-            for j in i[1]:
-                end = (j['lat'],j['lng'])
-                if Distace.distance(Distace(),start,end,range):
-                    l.append(i)
+            x=dict(i[1])
+            end=(x.get('lat'),x.get('lng'))
+            if print(Distace.distance(Distace(), start, end, range)):
+                print("W")
 
         return l
 

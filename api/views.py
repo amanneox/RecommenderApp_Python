@@ -40,10 +40,7 @@ def location_item_list(request):
     Location based items
     """
     if request.method == 'POST':
-        instance = LocationSerializer()
-        loc = request.data
-        loc = ([x for x in loc.values()])
-        # res=LocationSerializer.parse(instance,validated_data=loc)
+        loc = QueryDict.dict(request.data)
         return Response(DataFilter.filter(DataFilter(), validated_data=loc))
 
 
