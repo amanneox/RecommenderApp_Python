@@ -44,8 +44,9 @@ class LocationSerializer():
         for i in it:
             x=dict(i[1])
             end=(x.get('lat'),x.get('lng'))
-            if print(Distace.distance(Distace(), start, end, range)):
-                print("W")
+
+            if Distace.distance(Distace(), start, end, range):
+                l.append(i)
 
         return l
 
