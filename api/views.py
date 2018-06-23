@@ -50,7 +50,7 @@ def comment_list(request):
     List all comment, or create a new comment.
     """
     if request.method == 'POST':
-        validated_data = ([x for x in request.data.values()])
+        validated_data = QueryDict.dict(request.data)
         serializer = CommentFilter.filter(CommentFilter(), validated_data=validated_data)
         return Response(serializer)
 

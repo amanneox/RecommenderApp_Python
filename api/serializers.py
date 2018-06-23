@@ -17,20 +17,26 @@ class AdminLogin(object):
 
 class CommentFilter(object):
     def filter(self,validated_data):
-        com_list=([x.comments for x in Post.objects(sid=[validated_data[0]])])
+        com_list=([x.comments for x in Post.objects(__raw__={'sid':validated_data.get('sid')})])
         return com_list
 
 
 class DataFilter(object):
     def filter(self,validated_data):
         l=list()
-        service=Service.objects(__raw__={'category':validated_data.get('category')})
+
+        if validated_data.get('category') is None:
+            service=Service.objects()
+        else:
+            service=Service.objects(__raw__={'category':validated_data.get('category')})
+
         cat_list=iter([x.id for x in service])
         for i in cat_list:
             item = Item.objects(__raw__={'category':i})
-            valid_data =[(x.name, x.location) for x in item]
+            valid_data =[(x.name, x.location,x.img_url,x.address,x.value,x.rating) for x in item]
             x=LocationSerializer.parse(LocationSerializer(),validated_data,valid_data)
             l.append(x)
+
         return l
 
 
@@ -44,9 +50,11 @@ class LocationSerializer():
         for i in it:
             x=dict(i[1])
             end=(x.get('lat'),x.get('lng'))
-
             if Distace.distance(Distace(), start, end, range):
-                l.append(i)
+                d={"name":i[0],"img_url":i[2],"address":i[3],"value":i[4],"rating":i[5]}
+                d.update(i[1])
+                l.append(d)
+
 
         return l
 
