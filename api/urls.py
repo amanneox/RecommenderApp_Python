@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^services/(?P<pk>[0-9a-f]+)$', views.service_detail),
     url(r'^items/$', views.item_list),
     url(r'^items/(?P<pk>[0-9a-f]+)$', views.item_detail),
-    url(r'^item/comments/$',views.comment_list),
+    url(r'^items/comments/$',views.comment_list),
     url(r'^items/loc/$', views.location_item_list),
     url(r'^token/', CustomAuthToken.as_view()),
     url(r'^$', apidoc, name='apidoc')
