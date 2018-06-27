@@ -6,8 +6,9 @@ from api.models import Post
 
 
 class AdminLogin(object):
-    def admin_auth(self,validated_data):
-        x = AdminUser.objects(__raw__={'email': validated_data.get('email'),'password':validated_data.get('password')})
+    def admin_auth(self, validated_data):
+        x = AdminUser.objects(
+            __raw__={'email': validated_data.get('email'), 'password': validated_data.get('password')})
 
         if not x:
             return False
@@ -16,54 +17,56 @@ class AdminLogin(object):
 
 
 class CommentFilter(object):
-    def filter(self,validated_data):
-        com_list=([x.comments for x in Post.objects(__raw__={'sid':validated_data.get('sid')})])
+    def filter(self, validated_data):
+        com_list = ([x.comments for x in Post.objects(__raw__={'sid': validated_data.get('sid')})])
         return com_list
 
 
 class DataFilter(object):
-    def filter(self,validated_data):
-        l=list()
+    def filter(self, validated_data):
+        l = list()
 
         if validated_data.get('category') is None:
-            service=Service.objects()
+            service = Service.objects()
         else:
-            service=Service.objects(__raw__={'category':validated_data.get('category')})
+            service = Service.objects(__raw__={'category': validated_data.get('category')})
 
-        cat_list=iter([x.id for x in service])
+        cat_list = iter([x.id for x in service])
         for i in cat_list:
-            item = Item.objects(__raw__={'category':i})
-            valid_data =[(x.name, x.location,x.img_url,x.address,x.value,x.rating) for x in item]
-            x=LocationSerializer.parse(LocationSerializer(),validated_data,valid_data)
-            l.append(x)
+            item = Item.objects(__raw__={'category': i})
+            valid_data = [(x.name, x.location, x.img_url, x.address, x.value, x.rating) for x in item]
+            x = LocationSerializer.parse(LocationSerializer(), validated_data, valid_data)
+            for i in x:
+                print(i)
+                l.append(i)
 
         return l
+
+
+
 
 
 class LocationSerializer():
-
-    def parse(self,validated_data,data):
-        l=list()
+    def parse(self, validated_data, data):
+        l = list()
         start = (validated_data.get('lat'), validated_data.get('lng'))
-        range=validated_data.get('range')
-        it=iter(data)
+        range = validated_data.get('range')
+        it = iter(data)
         for i in it:
-            x=dict(i[1])
-            end=(x.get('lat'),x.get('lng'))
+            x = dict(i[1])
+            end = (x.get('lat'), x.get('lng'))
             if Distace.distance(Distace(), start, end, range):
-                d={"name":i[0],"img_url":i[2],"address":i[3],"value":i[4],"rating":i[5]}
+                d = {"name": i[0], "img_url": i[2], "address": i[3], "value": i[4], "rating": i[5]}
                 d.update(i[1])
-                l.append(d)
+                yield d
 
-
-        return l
+        #return json.dumps(l)
 
 
 class AdminUserSerializer(serializers.DocumentSerializer):
     class Meta:
-        model=AdminUser
-        fields='__all__'
-
+        model = AdminUser
+        fields = '__all__'
 
     def create(self, validated_data):
         return AdminUser.objects.create(**validated_data)
@@ -71,18 +74,18 @@ class AdminUserSerializer(serializers.DocumentSerializer):
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
         instance.password = validated_data.get('password', instance.password)
-        instance.usernmae=validated_data.get('username',instance.username)
+        instance.usernmae = validated_data.get('username', instance.username)
         instance.save()
         return instance
 
     def __delete__(self, instance):
         return AdminUser.objects.delete()
 
+
 class ItemSerializer(serializers.DocumentSerializer):
     class Meta:
-        model=Item
-        fields='__all__'
-
+        model = Item
+        fields = '__all__'
 
     def create(self, validated_data):
         return Item.objects.create(**validated_data)
@@ -90,9 +93,9 @@ class ItemSerializer(serializers.DocumentSerializer):
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
         instance.category = validated_data.get('category', instance.category)
-        instance.location=validated_data.get('location',instance.location)
-        instance.address=validated_data.get('address',instance.address)
-        instance.img_url=validated_data.get('img_url',instance.img_url)
+        instance.location = validated_data.get('location', instance.location)
+        instance.address = validated_data.get('address', instance.address)
+        instance.img_url = validated_data.get('img_url', instance.img_url)
         instance.save()
         return instance
 
@@ -100,11 +103,10 @@ class ItemSerializer(serializers.DocumentSerializer):
         return Item.objects.delete()
 
 
-
 class ServiceSerializer(serializers.DocumentSerializer):
     class Meta:
-        model=Service
-        fields='__all__'
+        model = Service
+        fields = '__all__'
 
     def create(self, validated_data):
         return Service.objects.create(**validated_data)
@@ -121,12 +123,10 @@ class ServiceSerializer(serializers.DocumentSerializer):
         return Service.objects.delete()
 
 
-
 class PostSerializer(serializers.DocumentSerializer):
-
     class Meta:
-        model=Post
-        fields='__all__'
+        model = Post
+        fields = '__all__'
 
     def create(self, validated_data):
         return Post.objects.create(**validated_data)
@@ -135,8 +135,8 @@ class PostSerializer(serializers.DocumentSerializer):
         instance.title = validated_data.get('title', instance.title)
         instance.author = validated_data.get('author', instance.author)
         instance.tags = validated_data.get('tags', instance.tags)
-        instance.comments = validated_data.get('comments',instance.comments)
-        instance.rating = validated_data.get('rating',instance.rating)
+        instance.comments = validated_data.get('comments', instance.comments)
+        instance.rating = validated_data.get('rating', instance.rating)
         instance.save()
         return instance
 
@@ -146,13 +146,14 @@ class PostSerializer(serializers.DocumentSerializer):
 
 class UserSerializer(serializers.DocumentSerializer):
     class Meta:
-        model=User
-        fields='__all__'
-    email=ListField(StringField())
-    first_name=ListField(StringField())
-    last_name=ListField(StringField())
-    number=ListField(IntField())
-    social=ListField(StringField())
+        model = User
+        fields = '__all__'
+
+    email = ListField(StringField())
+    first_name = ListField(StringField())
+    last_name = ListField(StringField())
+    number = ListField(IntField())
+    social = ListField(StringField())
 
     def create(self, validated_data):
         return User.objects.create(**validated_data)
@@ -161,7 +162,7 @@ class UserSerializer(serializers.DocumentSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.number = validated_data.get('number',instance.number)
+        instance.number = validated_data.get('number', instance.number)
         instance.save()
         return instance
 
