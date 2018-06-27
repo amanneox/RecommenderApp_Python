@@ -37,7 +37,6 @@ class DataFilter(object):
             valid_data = [(x.name, x.location, x.img_url, x.address, x.value, x.rating) for x in item]
             x = LocationSerializer.parse(LocationSerializer(), validated_data, valid_data)
             for i in x:
-                print(i)
                 l.append(i)
 
         return l
@@ -60,7 +59,7 @@ class LocationSerializer():
                 d.update(i[1])
                 yield d
 
-        #return json.dumps(l)
+
 
 
 class AdminUserSerializer(serializers.DocumentSerializer):
